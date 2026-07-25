@@ -39,13 +39,12 @@ InitPwd ← (
 MakeLog ← (
   &runi {Editor Tempfile}
   ⨬(&frasTempfile&p"Log creation successful"
-    &fde Tempfile Key‼(˜(&fwa$"logs/_") Encrypt|&p⋅$"Entry: _")
+    &fde Tempfile Key‼(˜(&fwa) Encrypt|&p⋅$"Entry: _")
   | &p"Log creation failed")
 )
 
 # ? Date
 EditLog ← (
-  $"logs/_"
   ⍜&frab(
     Key‼(
       ⤚⌝Encrypt
@@ -55,8 +54,11 @@ EditLog ← (
 )
 
 ViewLogs ← (
-  ⍆&fld "logs"
-  Key‼(ShowInEditor/◇$"_\n_"⍚⌞(˜$"_:\n\n_"⌝Encrypt⊙⊸&frab)|)
+  ⍆⊙¤⊸&fld "logs"
+  Key‼(ShowInEditor/◇$"_\n_"⍚⌞(˜$"_:\n\n_"⊙(˜↘⊙(+₁⧻))⌝Encrypt⊙⊸&frab)|)
 )
 
-ViewLogs
+&fe Verifile
+⨬(InitPwd
+| ⨬(MakeLog|EditLog)⊸&fe $"logs/_"Date
+)
