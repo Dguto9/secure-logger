@@ -60,5 +60,5 @@ ViewLogs ← (
 
 &fe Verifile
 ⨬(InitPwd
-| ⨬(MakeLog|EditLog)⊸&fe $"logs/_"Date
+| ⍡(ViewLogs⍩⍤""◇≍"v"⍩⊡1&args|⨬(MakeLog|EditLog)⊸&fe $"logs/_"Date)
 )
