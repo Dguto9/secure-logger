@@ -39,7 +39,7 @@ InitPwd ← (
 MakeLog ← (
   &runi {Editor Tempfile}
   ⨬(&frasTempfile&p"Log creation successful"
-    &fde Tempfile Key‼(˜(&fwa) Encrypt|&p⋅$"Entry: _")
+    &fde Tempfile Key‼(˜(&fwa) Encrypt|&p⋅$"Entry:\n_")
   | &p"Log creation failed")
 )
 
