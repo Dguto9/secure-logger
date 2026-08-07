@@ -30,12 +30,12 @@ Encrypt ← ⌅(
   ˜(
     °⊥₂₅₆⬚0↯∞_2_4utf₈
     ♭≡⌟Encipher₃₂
-    flatbase,256
+    ♭⊥₂₅₆
   )
-| back(
-    unbase,256resh inf_4
+| ˜(
+    °⊥₂₅₆↯ ∞_4
     ≡⌟Decipher₃₂↯∞_2
     ◌°⬚@\0↙°utf₈♭⊥₂₅₆
   ))
 
-GenKey = °⊥₂₅₆⌊×₂₅₆gen4_4
+GenKey ← °⊥₂₅₆⌊×₂₅₆gen4_4
