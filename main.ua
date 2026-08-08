@@ -1,15 +1,17 @@
 ~ "crypt.ua" ~ Encrypt GenKey Xor
 
-Editor   ← &var"EDITOR"
-TopDir   ← ⊸&fmd&var"LOGDIR"
-LogDir   ← ⊸&fmd⊂TopDir"/logs"
-TempDir  ← ⊸&fmd⊂TopDir"/.data"
-Tempfile ← ⊂TempDir"/log"
-Verifile ← ⊂TempDir"/verify"
-PathToLog = $"_/_" LogDir
+Editor     ← &var"EDITOR"
+TopDir     ← ◌°⬚@\n↙⋅⊙◌&runc {"realpath" ∘}&var"LOGDIR"
+LogDir     ← ⊂TopDir"/logs"
+TempDir    ← ⊂TopDir"/.data"
+Tempfile   ← ⊂TempDir"/log"
+Verifile   ← ⊂TempDir"/verify"
+Statusfile ← ⊂TempDir"/status"
 
 Date ← (/$"_-_"°⋕↙₃datetime now)
+PathToLog ← $"_/_" LogDir
 
+∩₃&fmd TopDir LogDir TempDir
 AskPwd ← (
   &pf"Password: "
   ◌&runi{"stty" "-echo" "-isig"}
@@ -63,6 +65,9 @@ ViewLogs ← (
 )
 
 &fe Verifile
-⨬(InitPwd
-| ⍡(ViewLogs⍩⍤""◇≍"v"⍩⊡1&args|⨬(MakeLog|EditLog)⊸&fe PathToLog Date)
+⨬(InitPwd|⍡(
+    ViewLogs⍩⍤""◇≍"v"⍩⊡1&args
+  | ⨬(MakeLog|EditLog)⊸&fe PathToLog DateNPrev⍩⋕⍩◇⊡1&args
+  | ⨬(MakeLog|EditLog)⊸&fe PathToLog Date
+  )
 )
