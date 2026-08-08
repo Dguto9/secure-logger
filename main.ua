@@ -8,10 +8,13 @@ Tempfile   ← ⊂TempDir"/log"
 Verifile   ← ⊂TempDir"/verify"
 Statusfile ← ⊂TempDir"/status"
 
-Date ← (/$"_-_"°⋕↙₃datetime now)
 PathToLog ← $"_/_" LogDir
 
 ∩₃&fmd TopDir LogDir TempDir
+
+Date      ← (/$"_-_"°⋕↙₃datetime now)
+DateNPrev ← /$"_-_" °⋕↙₃datetime -now ×86400
+
 AskPwd ← (
   &pf"Password: "
   ◌&runi{"stty" "-echo" "-isig"}
@@ -35,6 +38,7 @@ EncryptWN ← ⊂⊙Encrypt♭⊥₂₅₆⟜Xor GenKey⚂
 DecryptWN ← ⌝Encrypt Xor⊙(°⊥₂₅₆↯4_4⊃↙↘16)
 
 InitPwd ← (
+  &p "Initializing Log"
   GenKey AskPwd
   Encrypt⊙"Verify"
   &fwa Verifile
