@@ -1,3 +1,4 @@
+# Experimental!
 ~ "crypt.ua" ~ Encrypt GenKey Xor
 
 Editor     ← &var"EDITOR"
@@ -23,6 +24,7 @@ PathToLog ← $"_/_" LogDir
   ShowUnmerged ← map{"Local" "Remote"}□₂∩⌟(⊓(&cl|&cl⤙&rb∞|&cl)AtTop!&runs{"git" "--no-pager" "show" $":_:_"}) 2 3 &p"=====SHOWING UNMERGED====="
   Fetch        ← RunFallible‼"Could not acquire remote changes"AtTop!&runi {"git" "fetch"} &p"=====RUNNING GIT FETCH====="
   Push         ← RunFallible‼"Could not push"AtTop!&runi {"git" "push" "origin" "main"} &p"=====RUNNING GIT PUSH====="
+  Reachable    ← (=₀AtTop!&runi {"git" "ls-remote" "origin"} &p"=====CHECKING REMOTE REACHABILITY=====")
   Initialize ← (
     Init
     ◌AtTop!&runi {"git" "config" "user.name" "log_bot"}
@@ -65,8 +67,9 @@ EncryptWN ← ⊂⊙Encrypt♭⊥₂₅₆⟜Xor GenKey⚂
 DecryptWN ← ⌝Encrypt Xor⊙(°⊥₂₅₆↯4_4⊃↙↘16)
 
 Sync ← |0.0 (
-  ⍣(Git.Merge|&p"Could not automerge") Git.Fetch
-  ⍥(⍡(Git.Push Sync Git.Commit"Merged files"|&p)Key‼(⍚⌞(ShowInEditor!(Git.Add)/◇$"_\n\n_"⍚($"_:\n\n_"DecryptWN))|)⊸⍚(°mapGit.ShowUnmerged)) ≠₀⊸⧻Git.GetUnmerged
+  ⍣(Git.Merge Git.Fetch|&p"Could not automerge")
+  ⍥(⍣(Git.Commit"Merged files"|&p)⍚⌞(˜ShowInEditor!(Git.Add⊸˜&fwa ˜EncryptWN &frasTempfile)?⊙/◇$"_\n\n_"⟜⍚⌞(˜$"_:\n\n_"DecryptWN))Key⊸⍚(˜⊙∘°mapGit.ShowUnmerged))≠₀⊸⧻Git.GetUnmerged
+  ⍣(⍥Git.Push Git.Reachable|Sync)
 )
 
 InitPwd ← (
@@ -81,7 +84,7 @@ Init ← (
   Git.Initialize
   ⍣(Git.Merge Git.Fetch|∩&p"Failed to sync with remote")
   &fe Verifile
-  ⍥(Git.Push Git.Commit"Initial commit" Git.Add Verifile InitPwd)¬
+  ⍥(pattern(Git.Push Git.Commit"Initial commit" Git.Add Verifile caseInitPwd|&ftrjoinTopDir"/.git"))¬
 )
 
 # ? Date
@@ -109,7 +112,7 @@ ViewLogs ← (
 &fe Verifile
 ⨬(Init|⍡(
     ViewLogs⍩⍤""◇≍"v"⍩⊡1&args
-  | ⍣(Sync|&p)Git.Commit$"Edit file: _" Git.Add⊸⨬(MakeLog|EditLog)⊸&fe ⊸PathToLog DateNPrev⍩⋕⍩◇⊡1&args
-  | ⍣(Sync|&p)Git.Commit$"Edit file: _" Git.Add⊸⨬(MakeLog|EditLog)⊸&fe ⊸PathToLog Date
-  )⍣(Sync|&p)
+  | Sync Git.Commit$"Edit file: _" Git.Add⊸⨬(MakeLog|EditLog)⊸&fe ⊸PathToLog DateNPrev⍩⋕⍩◇⊡1&args
+  | Sync Git.Commit$"Edit file: _" Git.Add⊸⨬(MakeLog|EditLog)⊸&fe ⊸PathToLog Date
+  )Sync
 )
