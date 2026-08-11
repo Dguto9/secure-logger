@@ -27,6 +27,7 @@ PathToLog ← $"_/_" LogDir
     Init
     ◌AtTop!&runi {"git" "config" "user.name" "log_bot"}
     ◌AtTop!&runi {"git" "config" "user.name" "log_bot@fakeemail"}
+    ◌AtTop!&runi {"git" "config" "user.email" "log_bot@fakeemail"}
     &p"" &sc &pf "Remote URL: "
     ⍡(⍩AddRemote|⍤⊙0◌&ftr ⊂TopDir"/.git")
   )
