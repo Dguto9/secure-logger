@@ -26,7 +26,6 @@ PathToLog ← $"_/_" LogDir
   Initialize ← (
     Init
     ◌AtTop!&runi {"git" "config" "user.name" "log_bot"}
-    ◌AtTop!&runi {"git" "config" "user.name" "log_bot@fakeemail"}
     ◌AtTop!&runi {"git" "config" "user.email" "log_bot@fakeemail"}
     &p"" &sc &pf "Remote URL: "
     ⍡(⍩AddRemote|⍤⊙0◌&ftr ⊂TopDir"/.git")
@@ -46,15 +45,20 @@ AskPwd ← (
   &p""
 )
 
-VerifyPwd ← (
+VerifyPwdBool ← (
   &frabVerifile
-  ˜⌝Encrypt
+  ⍣(˜⌝Encrypt|"")
   ≍"Verify"
+  &p⊸⨬("Incorrect password, try again"|"Password verified")
+)
+VerifyPwdError ← (
+  VerifyPwdBool
   ⍤"Incorrect password"
 )
 
-Key‼          ← ⍡(^0&p"Password verified"⊸⍩VerifyPwd|^1&p"Incorrect password") GenKey AskPwd
-ShowInEditor! ← &fde Tempfile ⍥(^)¬ &runi {Editor Tempfile} &fwa Tempfile
+Key‼          ← ⍡(^0&p"Password verified"⊸⍩VerifyPwdError|^1&p"Incorrect password") GenKey AskPwd
+Key           ← (⍢(GenKey AskPwd◌|¬VerifyPwdBool) GenKey AskPwd)
+ShowInEditor! ← &ftr Tempfile ⍥(^)=₀ &runi {Editor Tempfile} &fwa Tempfile
 ShowInEditor  ← ShowInEditor!()
 
 EncryptWN ← ⊂⊙Encrypt♭⊥₂₅₆⟜Xor GenKey⚂
@@ -91,16 +95,15 @@ MakeLog ← (
 # ? Date
 EditLog ← (
   ⍜&frab(
-    Key‼(
-      ⤚DecryptWN
-      ShowInEditor!(˜EncryptWN&frasTempfile)
-    | )
+    Key
+    ⤚DecryptWN
+    ShowInEditor!(˜EncryptWN&frasTempfile)
   )
 )
 
 ViewLogs ← (
   ⍆⊙¤⊸&fld LogDir
-  Key‼(ShowInEditor/◇$"_\n_"⍚⌞(˜$"_:\n\n_"⊙(˜↘⊙(+₁⧻))DecryptWN⊙⊸&frab)|)
+  ShowInEditor/◇$"_\n_"⍚⌞(˜$"_:\n\n_"⊙(˜↘⊙(+₁⧻))DecryptWN⊙⊸&frab) Key
 )
 
 &fe Verifile
