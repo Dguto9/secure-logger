@@ -31,6 +31,8 @@ PathToLog ← $"_/_" LogDir
     ◌AtTop!&runi {"git" "config" "user.email" "log_bot@fakeemail"}
     &p"" &sc &pf "Remote URL: "
     ⍡(⍩AddRemote|⍤⊙0◌&ftr ⊂TopDir"/.git")
+    &fwa joinTopDir".gitattributes" $"_\n_"∩$"/_/** binary""logs"".data"
+    Git.Commit"Add .gitattributes" Git.Add ".gitattributes"
   )
 └─╴
 
@@ -68,7 +70,11 @@ DecryptWN ← ⌝Encrypt Xor⊙(°⊥₂₅₆↯4_4⊃↙↘16)
 
 Sync ← |0.0 (
   ⍣(Git.Merge Git.Fetch|&p"Could not automerge")
-  ⍥(⍣(Git.Commit"Merged files"|&p)⍚⌞(˜ShowInEditor!(Git.Add⊸˜&fwa ˜EncryptWN &frasTempfile)?⊙/◇$"_\n\n_"⟜⍚⌞(˜$"_:\n\n_"DecryptWN))Key⊸⍚(˜⊙∘°mapGit.ShowUnmerged))≠₀⊸⧻Git.GetUnmerged
+  ≠₀⊸⧻Git.GetUnmerged
+  ⍥(Key⊸⍚(˜⊙∘°mapGit.ShowUnmerged)
+    ⍚⌞(˜ShowInEditor!(Git.Add⊸˜&fwa ˜EncryptWN &frasTempfile)⊙/◇$"_\n\n_"⟜⍚⌞(˜$"_:\n\n_"DecryptWN))
+    ⍣(Git.Commit"Merged files"|&p)
+  )
   ⍣(⍥Git.Push Git.Reachable|Sync)
 )
 
@@ -84,14 +90,14 @@ Init ← (
   Git.Initialize
   ⍣(Git.Merge Git.Fetch|∩&p"Failed to sync with remote")
   &fe Verifile
-  ⍥(pattern(Git.Push Git.Commit"Initial commit" Git.Add Verifile caseInitPwd|&ftrjoinTopDir"/.git"))¬
+  ⍥(⍡(Git.Push Git.Commit"Create password" Git.Add Verifile⍩InitPwd|&ftr⊂TopDir"/.git"))¬
 )
 
 # ? Date
 MakeLog ← (
   &runi {Editor Tempfile}
   ⨬(&frasTempfile&p"Log creation successful"
-    &fde Tempfile Key‼(˜(&fwa) EncryptWN|&p⋅$"Entry:\n_")
+    &ftr Tempfile ˜&fwa EncryptWN Key
   | &p"Log creation failed")
 )
 
