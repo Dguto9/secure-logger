@@ -89,7 +89,7 @@ Init ← (
   ⍣(Git.Merge Git.Fetch|∩&p"Failed to sync with remote")
   &fe Verifile
   ⍥(⍡(⍩InitPwd
-      Git.Commit"Add .gitattributes" Git.Add ".gitattributes" &fwa? ⊂TopDir"/.gitattributes" $"_\n_"∩$"/_/** binary""logs"".data"
+      Git.Commit"Add .gitattributes" Git.Add".gitattributes" &fwa⊂TopDir"/.gitattributes" $"_\n_"∩$"/_/** binary""logs"".data"
       Git.Commit"Create password" Git.Add Verifile
       Git.Push
     | &ftr⊂TopDir"/.git")
