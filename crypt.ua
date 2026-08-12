@@ -25,7 +25,7 @@ Decipherₙ ← (
   ⊙⋅◌⍥ₙ(⊸DeShuffle)⊙(⍥ₙ(Add Magic)0)
 )
 
-Counter ← ⬚0↯¤4⊥4294967296◿ⁿ₁₂₈2
+Counter ← ⬚0↯¤4⊥4294967296
 
 # Encrypted ? Key Text
 Encrypt ← ⌅(
