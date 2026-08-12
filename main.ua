@@ -115,7 +115,7 @@ EditLog ← (
 
 ViewLogs ← (
   ⍆⊙¤⊸&fld LogDir
-  ShowInEditor/◇$"_\n_"⍚⌞(˜$"_:\n\n_"⊙(˜↘⊙(+₁⧻))DecryptWN⊙⊸&frab) Key
+  ShowInEditor/◇$"_\n\n_"⍚⌞(˜$"_:\n\t_"⊙(˜↘⊙(+₁⧻))/$"_\n\t_"⊜□⊸≠@\nDecryptWN⊙⊸&frab) Key
 )
 
 &fe Verifile
