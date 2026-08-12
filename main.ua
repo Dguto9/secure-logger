@@ -27,8 +27,8 @@ PathToLog ← $"_/_" LogDir
   Reachable    ← (=₀AtTop!&runi {"git" "ls-remote" "origin"} &p"=====CHECKING REMOTE REACHABILITY=====")
   Initialize ← (
     Init
-    ◌AtTop!&runi {"git" "config" "user.name" "log_bot"}
-    ◌AtTop!&runi {"git" "config" "user.email" "log_bot@fakeemail"}
+    ◌AtTop!&runi {"git" "config" "user.name" "secure_logger"}
+    ◌AtTop!&runi {"git" "config" "user.email" "secure_logger@fake_email"}
     &p"" &sc &pf "Remote URL: "
     ⍡(⍩AddRemote|⍤⊙0◌&ftr ⊂TopDir"/.git")
   )
