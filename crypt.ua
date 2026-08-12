@@ -25,16 +25,18 @@ Decipherₙ ← (
   ⊙⋅◌⍥ₙ(⊸DeShuffle)⊙(⍥ₙ(Add Magic)0)
 )
 
+Counter ← ⬚0↯¤4⊥4294967296◿ⁿ₁₂₈2
+
 # Encrypted ? Key Text
 Encrypt ← ⌅(
   ˜(
     °⊥₂₅₆⬚0↯∞_2_4utf₈
-    ♭≡⌟Encipher₃₂
+    ♭≡⌟(Encipher₃₂⊙(Xor Counter))⟜(⇡⧻)
     ♭⊥₂₅₆
   )
 | ˜(
-    °⊥₂₅₆↯ ∞_4
-    ≡⌟Decipher₃₂↯∞_2
+    ↯∞_2°⊥₂₅₆↯∞_4
+    ≡⌟(Decipher₃₂⊙(Xor Counter))⟜(⇡⧻)
     ◌°⬚@\0↙°utf₈♭⊥₂₅₆
   ))
 
