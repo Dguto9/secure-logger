@@ -31,8 +31,6 @@ PathToLog ← $"_/_" LogDir
     ◌AtTop!&runi {"git" "config" "user.email" "log_bot@fakeemail"}
     &p"" &sc &pf "Remote URL: "
     ⍡(⍩AddRemote|⍤⊙0◌&ftr ⊂TopDir"/.git")
-    &fwa joinTopDir".gitattributes" $"_\n_"∩$"/_/** binary""logs"".data"
-    Git.Commit"Add .gitattributes" Git.Add ".gitattributes"
   )
 └─╴
 
@@ -90,7 +88,12 @@ Init ← (
   Git.Initialize
   ⍣(Git.Merge Git.Fetch|∩&p"Failed to sync with remote")
   &fe Verifile
-  ⍥(⍡(Git.Push Git.Commit"Create password" Git.Add Verifile⍩InitPwd|&ftr⊂TopDir"/.git"))¬
+  ⍥(⍡(⍩InitPwd
+      Git.Commit"Add .gitattributes" Git.Add ".gitattributes" &fwa? ⊂TopDir"/.gitattributes" $"_\n_"∩$"/_/** binary""logs"".data"
+      Git.Commit"Create password" Git.Add Verifile
+      Git.Push
+    | &ftr⊂TopDir"/.git")
+  )¬
 )
 
 # ? Date
