@@ -36,8 +36,8 @@ PathToLog ← $"_/_" LogDir
 
 ∩₃&fmd TopDir LogDir TempDir
 
-Date      ← (/$"_-_"°⋕↙₃datetime now)
-DateNPrev ← /$"_-_" °⋕↙₃datetime -now ×86400
+Date      ← (/$"_-_"°⋕↙₃datetime +×₃₆₀₀timezone now)
+DateNPrev ← /$"_-_" °⋕↙₃datetime +×₃₆₀₀timezone -now ×86400
 
 AskPwd ← (
   &pf"Password: "
